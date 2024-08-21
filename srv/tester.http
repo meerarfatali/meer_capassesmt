@@ -1,0 +1,94 @@
+###Testing the service Document
+http://localhost:4004/odata/v4/EmployeeService
+
+###Employee Service Metadata Document
+http://localhost:4004/odata/v4/EmployeeService/$metadata
+
+###Employee Set Data
+http://localhost:4004/odata/v4/EmployeeService/EmployeeSet
+
+###Get records after Filtering names with starting letter "S"
+GET http://localhost:4004/odata/v4/EmployeeService/EmployeeSet?$filter=contains(nameFirst,'S')
+
+###Get top 2 employees, using orderBy on SalaryAmount
+http://localhost:4004/odata/v4/EmployeeService/EmployeeSet?$orderby=salaryAmount&$top=2
+
+###CREATING a new valid Employee Data Record
+POST http://localhost:4004/odata/v4/EmployeeService/EmployeeSet
+Content-Type: application/json
+
+{
+    "nameFirst": "Meer2",
+    "nameLast": "Spring",
+    "Gender": "M",
+    "Language": "E",
+    "loginName": "MEER",
+    "Currency_code": "USD",
+    "salaryAmount": 49000,
+    "accountNumber": "111222333",
+    "bankId": "5100098",
+    "bankName": "My Bank of Australia"
+}
+
+###Testing the Create Validation-salary>50000 and currency=USD
+POST http://localhost:4004/odata/v4/EmployeeService/EmployeeSet
+Content-Type: application/json
+
+{
+    "nameFirst": "Arfat2",
+    "nameLast": "Ali",
+    "Gender": "M",
+    "Language": "E",
+    "loginName": "ALI",
+    "Currency_code": "USD",
+    "salaryAmount": 950000,
+    "accountNumber": "111222333",
+    "bankId": "5100098",
+    "bankName": "My Bank of Antioch"
+}
+
+###Testing the Create Validation-salary>50000 and currency=EUR
+POST http://localhost:4004/odata/v4/EmployeeService/EmployeeSet
+Content-Type: application/json
+
+{
+    "nameFirst": "Arfat2",
+    "nameLast": "Ali",
+    "Gender": "M",
+    "Language": "E",
+    "loginName": "ALI",
+    "Currency_code": "INR",
+    "salaryAmount": 5000,
+    "accountNumber": "111222333",
+    "bankId": "5100098",
+    "bankName": "My Bank of Antioch"
+}
+
+
+###UPDATE an employee by keeping the nameFirst and loginName intact.
+PATCH http://localhost:4004/odata/v4/EmployeeService/EmployeeSet(ID=02BD2137-0890-1EEA-A6C2-BB55C19787FB,IsActiveEntity=true)
+Content-Type: application/json
+ 
+{
+      "nameFirst": "Sally",
+      "nameLast": "Spring",
+      "Gender": "F",
+      "Language": "E",
+      "phoneNumber": "9966875334",
+      "Email": "sally.spring@itelo.info",
+      "loginName": "SPRINGS",
+      "Currency_code": "USD",
+      "salaryAmount": 40099,
+      "accountNumber": "111222333",
+      "bankId": "5100006",
+      "bankName": "My Bank of Antioch"
+}
+ 
+ 
+ 
+###DELETE any employee.
+DELETE http://localhost:4004/odata/v4/EmployeeService/EmployeeSet(ID=279a27a5-9ece-4555-8b2a-9d036040e218)
+ 
+###DELETE an employee whose nameFirst starts with ‘S’.
+DELETE http://localhost:4004/odata/v4/EmployeeService/EmployeeSet?$filter=contains(nameFirst,'S')
+ 
